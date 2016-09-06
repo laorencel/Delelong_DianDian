@@ -23,11 +23,13 @@
             android:name="com.amap.api.v2.apikey"
             android:value="f888742515364f61a84e195df5942a44" />
         <activity android:name=".MainActivity">
-
         </activity>
         <activity android:name=".ChoosePosition"></activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".StartActivity">
+
+        </activity>
+        <activity android:name=".SettingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

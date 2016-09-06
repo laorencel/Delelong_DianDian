@@ -82,7 +82,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         head_actionbar = (ImageButton) menuView.findViewById(R.id.head_actionbar);
         msg_actionbar = (ImageButton) menuView.findViewById(R.id.msg_actionbar);
         city_actionbar = (TextView) menuView.findViewById(R.id.city_actionbar);
-        Log.i(TAG, "initActionBar: 1111111111");
         head_actionbar.setOnClickListener(this);
 
     }
@@ -148,18 +147,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         });
     }
 
-    private TextView timeOfReach, positon;
-    private LinearLayout textInCenter;
+    private TextView timeOfReach, positon;//司机到达时间、在哪上车
+    private LinearLayout textInCenter;//屏幕中间布局
 
-    private ImageButton myLocation;
+    private ImageButton myLocation;//我的位置按钮
 
-    private ImageButton showTime, hideTime;
-    private TextView myPosition, myDestination, timeToGo;
+    private ImageButton showTime, hideTime;//显示、隐藏时间显示
+    private TextView myPosition, myDestination, timeToGo;//起点、终点、具体时间选择
     private LinearLayout lyOfTime, route;
 
     private FragmentManager mFragManager;
     private TimeFrag mTimeFrag;
 
+    public void enableClick(){
+        myPosition.setEnabled(true);
+        myDestination.setEnabled(true);
+        timeToGo.setEnabled(true);
+        route.setEnabled(true);
+    }
+    private void unEnableClick(){
+        myPosition.setEnabled(false);
+        myDestination.setEnabled(false);
+        timeToGo.setEnabled(false);
+        route.setEnabled(false);
+    }
     /**
      * 初始化
      */
@@ -312,11 +323,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 //调出侧边栏
                 if (menuFrag == null) {
                     menuFrag = new MenuFrag();
-                    mFragManager.beginTransaction().add(R.id.rl_menuFrag, menuFrag, "menuFrag").show(menuFrag).commit();
+                    mFragManager.beginTransaction().add(R.id.rl_menuFrag, menuFrag, "menuFrag").addToBackStack(null).show(menuFrag).commit();
                 } else {
                     mFragManager.beginTransaction().show(menuFrag).commit();
                 }
                 actionBar.hide();
+                unEnableClick();//本层按钮不可用，免误操作
                 break;
             case R.id.myLocation:
                 //定位到我的位置

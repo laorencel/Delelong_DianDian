@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.LatLng;
+import com.delelong.diandian.utils.ToastUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -224,7 +226,11 @@ public class BaseActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            if(e.toString().contains("Network is unreachable")){
+                ToastUtil.show(this,"请先连接网络");
+            }
         }
+        Log.i(TAG, "getHttpResult: "+stringBuilder.toString());
         return stringBuilder.toString();
     }
 
