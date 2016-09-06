@@ -1,0 +1,1 @@
+include ':diandian', ':baidumaptest', ':amapdemo'

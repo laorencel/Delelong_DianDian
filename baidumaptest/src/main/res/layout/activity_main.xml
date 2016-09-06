@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    tools:context="com.delelong.baidumaptest.MainActivity">
+
+    <TextView
+        android:id="@+id/nothing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <LinearLayout
+        android:id="@+id/centerOfMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/nothing"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="3dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/textInCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ffff">
+
+            <TextView
+                android:id="@+id/timeOfReach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_text"
+                android:padding="2dp"
+                android:text="@string/timeOfReach" />
+
+            <TextView
+                android:id="@+id/positon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_text"
+                android:padding="2dp"
+                android:text="@string/postion" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/mark_center"
+            android:layout_width="20dp"
+            android:layout_height="40dp"
+            android:background="@drawable/mark_center" />
+    </LinearLayout>
+    <!--始发地、目的地及隐藏的确认拼车-->
+    <include layout="@layout/item_location_include"
+        android:id="@+id/location_include"></include>
+    <!--时间选择-->
+    <include layout="@layout/item_timepicker"
+        android:id="@+id/item_timepicker"></include>
+
+</RelativeLayout>
