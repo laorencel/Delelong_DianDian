@@ -1,1 +1,1 @@
-include ':diandian', ':baidumaptest', ':amapdemo'
+include ':diandian', ':baidumaptest', ':amapdemo', ':JPushExample(471877)'

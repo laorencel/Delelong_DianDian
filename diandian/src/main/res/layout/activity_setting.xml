@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e7e7e7"
+    android:background="#eaeaea"
     android:orientation="vertical">
 
     <Button
@@ -10,7 +10,6 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/bg_text_custome"
         android:gravity="center_vertical"

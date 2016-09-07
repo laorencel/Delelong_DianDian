@@ -1,13 +1,14 @@
 package com.delelong.diandian.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Lawrence on 2016/8/23.
  */
 public class Client implements Serializable {
 
-    private String real_name;//真实姓名
+    private String level;//会员等级
     private String phone;//手机号码
     private String post_code;//邮编
     private String urgent_name;//紧急联系人名称
@@ -22,14 +23,15 @@ public class Client implements Serializable {
     private String email;//
     private String gender;//
     private String certificate_no;//
+    private String real_name;//
+
 
     public Client() {
 
     }
 
     /**
-     *
-     * @param real_name 真实姓名
+     * @param level//会员等级
      * @param phone//手机号码
      * @param post_code//邮编
      * @param urgent_name//紧急联系人名称
@@ -44,10 +46,12 @@ public class Client implements Serializable {
      * @param email//邮箱
      * @param gender//性别(Number:1:男;2:女;)
      * @param certificate_no//证件号
+     * @param real_name 真实姓名
      */
-    public Client(String real_name, String phone, String post_code, String urgent_name, String urgent_phone,
+    public Client(String level,String phone, String post_code, String urgent_name, String urgent_phone,
                   String nick_name, String certificate_type, String head_portrait, String county,
-                  String province, String city, String address, String email, String gender, String certificate_no) {
+                  String province, String city, String address, String email, String gender, String certificate_no,String real_name) {
+        this.level = level;
         this.real_name = real_name;
         this.phone = phone;
         this.post_code = post_code;
@@ -63,5 +67,139 @@ public class Client implements Serializable {
         this.email = email;
         this.gender = gender;
         this.certificate_no = certificate_no;
+    }
+
+    List<String> statusList;
+    public void setStatusList(List<String> statusList){
+        this.statusList = statusList;
+    }
+    public List<String> getStatusList(){return statusList;}
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPost_code() {
+        return post_code;
+    }
+
+    public void setPost_code(String post_code) {
+        this.post_code = post_code;
+    }
+
+    public String getUrgent_name() {
+        return urgent_name;
+    }
+
+    public void setUrgent_name(String urgent_name) {
+        this.urgent_name = urgent_name;
+    }
+
+    public String getUrgent_phone() {
+        return urgent_phone;
+    }
+
+    public void setUrgent_phone(String urgent_phone) {
+        this.urgent_phone = urgent_phone;
+    }
+
+    public String getNick_name() {
+        return nick_name;
+    }
+
+    public void setNick_name(String nick_name) {
+        this.nick_name = nick_name;
+    }
+
+    public String getCertificate_type() {
+        return certificate_type;
+    }
+
+    public void setCertificate_type(String certificate_type) {
+        this.certificate_type = certificate_type;
+    }
+
+    public String getHead_portrait() {
+        return head_portrait;
+    }
+
+    public void setHead_portrait(String head_portrait) {
+        this.head_portrait = head_portrait;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getCertificate_no() {
+        return certificate_no;
+    }
+
+    public void setCertificate_no(String certificate_no) {
+        this.certificate_no = certificate_no;
+    }
+
+    public String getReal_name() {
+        return real_name;
+    }
+
+    public void setReal_name(String real_name) {
+        this.real_name = real_name;
     }
 }

@@ -1,5 +1,7 @@
 package com.delelong.diandian;
 
+import android.animation.LayoutTransition;
+import android.annotation.TargetApi;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +15,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -33,6 +34,7 @@ import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.route.DrivePath;
@@ -147,15 +149,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         });
     }
 
-    private TextView timeOfReach, positon;//司机到达时间、在哪上车
-    private LinearLayout textInCenter;//屏幕中间布局
-
-    private ImageButton myLocation;//我的位置按钮
-
-    private ImageButton showTime, hideTime;//显示、隐藏时间显示
-    private TextView myPosition, myDestination, timeToGo;//起点、终点、具体时间选择
-    private LinearLayout lyOfTime, route;
-
     private FragmentManager mFragManager;
     private TimeFrag mTimeFrag;
 
@@ -171,15 +164,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         timeToGo.setEnabled(false);
         route.setEnabled(false);
     }
+
+    private RelativeLayout rl_main;
+    private TextView timeOfReach, positon;//司机到达时间、在哪上车
+    private LinearLayout textInCenter;//屏幕中间布局
+
+    private ImageButton myLocation;//我的位置按钮
+
+    private ImageButton showTime, hideTime;//显示、隐藏时间显示
+    private TextView myPosition, myDestination, timeToGo;//起点、终点、具体时间选择
+    private LinearLayout lyOfTime, route;
     /**
      * 初始化
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void initView() {
 //        //创建乘客对象
         initClient();
         initOrder();
 
         mFragManager = getFragmentManager();
+
+        //布局顺滑
+        rl_main = (RelativeLayout) findViewById(R.id.rl_main);
+        rl_main.setLayoutTransition(new LayoutTransition());
+
         //隐藏拼车、确认模块
         rl_confirm = (RelativeLayout) findViewById(R.id.rl_confirm);
         ly_pinChe = (LinearLayout) findViewById(R.id.ly_pinChe);
@@ -241,10 +250,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mUiSettings.setRotateGesturesEnabled(false);//是否允许通过手势来旋转。
         mUiSettings.setScaleControlsEnabled(false);//设置比例尺功能是否可用
 
+        //改写箭头样式
+        myLocationStyle = new MyLocationStyle();
+        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.navi_map_gps_locked1));
+        myLocationStyle.strokeColor(Color.argb(0, 0, 0, 0));// 设置圆形的边框颜色
+        myLocationStyle.radiusFillColor(Color.argb(0, 0, 0, 0));// 设置圆形的填充颜色
+        aMap.setMyLocationStyle(myLocationStyle);
+
         aMap.setLocationSource(this);// 设置定位监听
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
 
-        myLocationIcon = BitmapDescriptorFactory.fromResource(R.mipmap.navi_map_gps_locked);
+//        myLocationIcon = BitmapDescriptorFactory.fromResource(R.drawable.navi_map_gps_locked1);
         //设置方向监听
         myOrientationListener = new MyOrientationListener(context);
         myOrientationListener.setmOnOritationListener(new MyOrientationListener.OnOritationListener() {
@@ -271,7 +287,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     && aMapLocation.getErrorCode() == 0) {
                 city = aMapLocation.getCity();
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
-
                 //更新经纬度
                 myLatitude = aMapLocation.getLatitude();
                 myLongitude = aMapLocation.getLongitude();
@@ -336,7 +351,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.showTime:
                 lyOfTime.setVisibility(View.VISIBLE);
-                lyOfTime.setAnimation(AnimationUtils.loadAnimation(this, R.anim.item_time_show));
+
+//                lyOfTime.setAnimation(AnimationUtils.loadAnimation(this, R.anim.item_time_show));
                 break;
             case R.id.hideTime:
                 lyOfTime.setVisibility(View.GONE);
@@ -345,7 +361,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 //（如果没加载）加载时间选择器
                 if (mTimeFrag == null) {
                     mTimeFrag = new TimeFrag();
-                    mFragManager.beginTransaction().add(R.id.frag_time_picker, mTimeFrag, "TimeFrag").show(mTimeFrag).commit();
+                    mFragManager.beginTransaction().add(R.id.frag_time_picker, mTimeFrag, "TimeFrag").addToBackStack(null).show(mTimeFrag).commit();
                 } else {
                     mFragManager.beginTransaction().show(mTimeFrag).commit();
                 }
@@ -478,7 +494,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         tv_confirm.setOnClickListener(this);
     }
 
-
+    MyLocationStyle myLocationStyle;
     @Override
     public void activate(OnLocationChangedListener onLocationChangedListener) {
         mListener = onLocationChangedListener;
@@ -490,8 +506,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+            aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
             mLocationOption.setInterval(2000);
             mLocationClient.setLocationOption(mLocationOption);
+
 
             mLocationClient.startLocation();
         }
@@ -555,6 +573,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
+        aMap.setMyLocationStyle(myLocationStyle);
     }
 
     private boolean isTwice = false;

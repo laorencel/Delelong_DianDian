@@ -27,15 +27,16 @@
         <activity android:name=".ChoosePosition"></activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".StartActivity">
-
-        </activity>
-        <activity android:name=".SettingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".menuActivity.SettingActivity">
+
+        </activity>
+        <activity android:name=".menuActivity.MenuInfoActivity"></activity>
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService" >
         </service>

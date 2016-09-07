@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Delelong_dianDian.iml" filepath="$PROJECT_DIR$/Delelong_dianDian.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JPushExample(471877)/JPushExample(471877).iml" filepath="$PROJECT_DIR$/JPushExample(471877)/JPushExample(471877).iml" />
       <module fileurl="file://$PROJECT_DIR$/amapdemo/amapdemo.iml" filepath="$PROJECT_DIR$/amapdemo/amapdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/baidumaptest/baidumaptest.iml" filepath="$PROJECT_DIR$/baidumaptest/baidumaptest.iml" />
       <module fileurl="file://$PROJECT_DIR$/diandian/diandian.iml" filepath="$PROJECT_DIR$/diandian/diandian.iml" />
